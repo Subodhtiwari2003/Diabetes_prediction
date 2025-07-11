@@ -6,3 +6,4 @@ seaborn
 matplotlib
 plotly
 scipy
+flask
