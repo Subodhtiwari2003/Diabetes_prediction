@@ -1,15 +1,14 @@
-from flask import import flask, requests, jsonify
+from flask import Flask, request, jsonify
 import joblib
 
+model = joblib.load("model.pkl")
 app = Flask(__name__)
-
-model = joblib.load("diabetes_model.pkl")
 
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.get_json()
-    prediction = model.predict([data["features"]])
-    return jsonify({"prediction": prediction[0]})
+    prediction = model.predict([data['features']])
+    return jsonify({"prediction": prediction.tolist()})
 
 if __name__ == "__main__":
     app.run(debug=True)
