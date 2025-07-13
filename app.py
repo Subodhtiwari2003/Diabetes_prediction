@@ -1,19 +1,28 @@
-from flask import Flask, request, jsonify
-import joblib
+from flask import Flask, render_template, request
+from joblib import load
+import numpy as np
+import os
 
-filename = "model.pkl"
-with open(filename, "rb") as f:
-    model = joblib.load(f)
-
-# Now you can use your model for predictions, like:
-# prediction = model.predict([your_input_features])
 app = Flask(__name__)
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    data = request.get_json()
-    prediction = model.predict([data['features']])
-    return jsonify({"prediction": prediction.tolist()})
+# Load the trained model
+model = load(os.path.join('Diabetes_prediction', 'model.joblib'))
 
-if __name__ == "__main__":
+@app.route('/')
+def home():
+    return render_template('index.html')  # You’ll create this next
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    # Extract input values from form
+    features = [float(x) for x in request.form.values()]
+    input_array = np.array(features).reshape(1, -1)
+    
+    # Make prediction
+    prediction = model.predict(input_array)
+    result = 'Diabetic' if prediction[0] == 1 else 'Not Diabetic'
+    
+    return render_template('index.html', prediction_text=f'Prediction: {result}')
+
+if __name__ == '__main__':
     app.run(debug=True)
