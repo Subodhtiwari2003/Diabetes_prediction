@@ -2,82 +2,49 @@
 <html>
 <head>
     <title>Diabetes Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f8f8f8;
-        }
-        h2 {
-            color: #333;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        label, input {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="text"] {
-            padding: 8px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="submit"] {
-            padding: 10px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        h3 {
-            color: green;
-        }
-    </style>
 </head>
 <body>
-<form method="POST" action="/predict">
-    <label>Pregnancies:</label><input type="text" name="pregnancies"><br><br>
-    <label>Glucose:</label><input type="text" name="glucose"><br><br>
-    <label>Blood Pressure:</label><input type="text" name="bloodpressure"><br><br>
-    <label>Skin Thickness:</label><input type="text" name="skinthickness"><br><br>
-    <label>Insulin:</label><input type="text" name="insulin"><br><br>
-    <label>BMI:</label><input type="text" name="bmi"><br><br>
-    <label>Diabetes Pedigree Function:</label><input type="text" name="dpf"><br><br>
-    <label>Age:</label><input type="text" name="age"><br><br>
+    <h1>Diabetes Prediction Form</h1>
+    <form action="/predict" method="post">
+        <label>Pregnancies:</label>
+        <input type="number" name="pregnancies" step="1" required><br><br>
 
-    <label>BMI Category:</label>
-    <select name="bmi_category">
-        <option value="Underweight">Underweight</option>
-        <option value="Normal">Normal</option>
-        <option value="Overweight">Overweight</option>
-        <option value="Obesity Class I">Obesity Class I</option>
-        <option value="Obesity Class II">Obesity Class II</option>
-        <option value="Obesity Class III">Obesity Class III</option>
-        <option value="nan">Unknown</option>
-    </select><br><br>
+        <label>Glucose:</label>
+        <input type="number" name="glucose" step="any" required><br><br>
 
-    <input type="submit" value="Predict">
-</form>
+        <label>Blood Pressure:</label>
+        <input type="number" name="bloodpressure" step="any" required><br><br>
 
-{% if prediction_text %}
-    <h3>{{ prediction_text }}</h3>
-if prediction_text == "Diabetes":
-        <h3 style="color: red;">You have diabetes.</h3>
-    else:
-        <h3 style="color: green;">You do not have diabetes.</h3>
-{% endif %}
+        <label>Skin Thickness:</label>
+        <input type="number" name="skinthickness" step="any" required><br><br>
 
-{% if error_message %}
-    <h3 style="color: red;">{{ error_message }}</h3>
-{% endif %}
+        <label>Insulin:</label>
+        <input type="number" name="insulin" step="any" required><br><br>
 
+        <label>BMI:</label>
+        <input type="number" name="bmi" step="any" required><br><br>
+
+        <label>Diabetes Pedigree Function (DPF):</label>
+        <input type="number" name="dpf" step="any" required><br><br>
+
+        <label>Age:</label>
+        <input type="number" name="age" step="1" required><br><br>
+
+        <label>BMI Category:</label>
+        <select name="bmi_category" required>
+            <option value="Underweight">Underweight</option>
+            <option value="Normal Weight">Normal Weight</option>
+            <option value="Overweight">Overweight</option>
+            <option value="Obesity Class I">Obesity Class I</option>
+            <option value="Obesity Class II">Obesity Class II</option>
+            <option value="Obesity Class III">Obesity Class III</option>
+        </select><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
 </body>
 </html>
-

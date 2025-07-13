@@ -15,7 +15,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Collect numeric inputs from form
+        # Get numeric input values
         numeric_inputs = [
             float(request.form['pregnancies']),
             float(request.form['glucose']),
@@ -27,13 +27,13 @@ def predict():
             float(request.form['age'])
         ]
 
-        # Collect BMI category (string input)
-        bmi_category = request.form['bmi_category']  # e.g., 'Obesity Class I'
+        # Get categorical input (BMI Category)
+        bmi_category = request.form['bmi_category']
 
-        # Combine numeric and categorical input
+        # Combine all inputs in the correct order
         final_input = np.array(numeric_inputs + [bmi_category], dtype=object).reshape(1, -1)
 
-        # Predict
+        # Predict using the full pipeline
         prediction = model.predict(final_input)
         result = 'Diabetic' if prediction[0] == 1 else 'Not Diabetic'
 
@@ -44,4 +44,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
