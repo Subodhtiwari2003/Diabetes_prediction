@@ -42,21 +42,33 @@
     </style>
 </head>
 <body>
-    <h2>Diabetes Prediction Form</h2>
-    <form method="POST" action="/predict">
-        <label>Pregnancies:</label><input type="text" name="pregnancies">
-        <label>Glucose:</label><input type="text" name="glucose">
-        <label>Blood Pressure:</label><input type="text" name="bloodpressure">
-        <label>Skin Thickness:</label><input type="text" name="skinthickness">
-        <label>Insulin:</label><input type="text" name="insulin">
-        <label>BMI:</label><input type="text" name="bmi">
-        <label>Diabetes Pedigree Function:</label><input type="text" name="dpf">
-        <label>Age:</label><input type="text" name="age">
-        <input type="submit" value="Predict">
-    </form>
+   <form method="POST" action="/predict">
+    <label>Pregnancies:</label><input type="text" name="pregnancies"><br><br>
+    <label>Glucose:</label><input type="text" name="glucose"><br><br>
+    <label>Blood Pressure:</label><input type="text" name="bloodpressure"><br><br>
+    <label>Skin Thickness:</label><input type="text" name="skinthickness"><br><br>
+    <label>Insulin:</label><input type="text" name="insulin"><br><br>
+    <label>BMI:</label><input type="text" name="bmi"><br><br>
+    <label>Diabetes Pedigree Function:</label><input type="text" name="dpf"><br><br>
+    <label>Age:</label><input type="text" name="age"><br><br>
 
-    {% if prediction_text %}
-        <h3>{{ prediction_text }}</h3>
-    {% endif %}
+<label>BMI Category:</label>
+<select name="bmi_category">
+    <option value="Underweight">Underweight</option>
+    <option value="Normal">Normal</option>
+    <option value="Overweight">Overweight</option>
+    <option value="Obesity Class I">Obesity Class I</option>
+    <option value="Obesity Class II">Obesity Class II</option>
+    <option value="Obesity Class III">Obesity Class III</option>
+    <option value="nan">Unknown</option>
+</select><br><br>
+
+    <input type="submit" value="Predict">
+</form>
+
+{% if prediction_text %}
+    <h3>{{ prediction_text }}</h3>
+{% endif %}
 </body>
 </html>
+
