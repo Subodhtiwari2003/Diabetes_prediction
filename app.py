@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-# Load the trained model
+# Load the trained pipeline model
 model = load(os.path.join('Diabetes_prediction', 'model.joblib'))
 
 @app.route('/')
@@ -15,7 +15,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Extract numeric inputs
+        # Collect numeric inputs from form
         numeric_inputs = [
             float(request.form['pregnancies']),
             float(request.form['glucose']),
@@ -27,10 +27,10 @@ def predict():
             float(request.form['age'])
         ]
 
-        # Extract categorical input (BMI Category)
-        bmi_category = request.form['bmi_category']
+        # Collect BMI category (string input)
+        bmi_category = request.form['bmi_category']  # e.g., 'Obesity Class I'
 
-        # Combine numeric + categorical (as object)
+        # Combine numeric and categorical input
         final_input = np.array(numeric_inputs + [bmi_category], dtype=object).reshape(1, -1)
 
         # Predict
@@ -42,6 +42,6 @@ def predict():
 
     return render_template('index.html', prediction_text=f'Prediction: {result}')
 
-
 if __name__ == '__main__':
     app.run(debug=True)
+
